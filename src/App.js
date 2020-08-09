@@ -27,7 +27,7 @@ const initialTasks = [
     {
         id: uuidv4(),
         title: "4",
-        priority: 3,
+        priority: 4,
         status: 'review'
     }
 ]
@@ -60,29 +60,26 @@ function App() {
         setTasks(copiedTasks)
     }
     const onDragEnd = (result) => {
-        const { source, destination } = result;
-
+        const {source, destination} = result;
         // dropped outside the list
         if (!destination) {
             return;
         }
-
-        if (source.droppableId === destination.droppableId) {
-            const CopiedList = tasks.slice()
-            const itemDestination = CopiedList[result.destination.index]
-            CopiedList[result.destination.index] = CopiedList[result.source.index]
-            CopiedList[result.source.index] = itemDestination
-            setTasks(CopiedList)
-        } else {
-
+        if (destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
         }
-
-
+        const copiedData = tasks.slice()
+        const column = statuses[source.droppableId]
+        const draggableItem = copiedData.find(el=>el.id===result.draggableId)
+        console.log(column)
+        console.log(draggableItem)
 
 
     }
     return (
-        <div style={{display:'flex', justifyContent:'center', height:'100%'}}>
+        <div style={{display: 'flex', justifyContent: 'center', height: '100%'}}>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div
                     style={{

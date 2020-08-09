@@ -48,6 +48,15 @@ function Board(props) {
         }}>
 
             <div style={{margin: 8}}>
+                <h2
+                    style={{
+                        background:  'lightgrey',
+                        padding: 4,
+                        width: 250,
+                        minHeight: 1,
+
+                    }}
+                >Board {props.status}</h2>
                 <Droppable key ={uuidv4()} droppableId={String(props.index)}>
                     {(provided, snapshot) => (
 
@@ -62,8 +71,9 @@ function Board(props) {
 
 
                             }}
+
                         >
-                            <h2>Board {props.status}</h2>
+
 
                             {
                                 props.tasks
@@ -76,7 +86,9 @@ function Board(props) {
                                         editTask={props.editTask}
                                     />)
                             }
+                            {provided.placeholder}
                         </div>
+
                     )}
 
 

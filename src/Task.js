@@ -40,7 +40,9 @@ function Task(props) {
                          }}
                     >
                         {props.el.title}
+                        {provided.placeholder}
                     </div>
+
                 )}
 
             </Draggable>
