@@ -1,17 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import {Draggable} from "react-beautiful-dnd";
+import {v4 as uuidv4} from 'uuid';
 
-;
-
-const Container = styled.div`
-    margin:10px;
-    border:1px solid lightgrey;
-    border-radius:10px;
-      
-`;
-const TaskList = styled.div`
-    padding: 8px;
-`
 
 function Task(props) {
     const [inputValue, setInput] = useState(props.el.title)
@@ -29,21 +20,32 @@ function Task(props) {
         }
     }
     return (
-        <>
-            <Container>
-                <TaskList>
-                    {editBut ? props.el.title : ""}
-                    {editBut ? <button onClick={changeBut}>Edit</button> :
-                        <input value={inputValue} onChange={changeInput}/>}
-                    {editBut ? <button onClick={() => props.deleteTask(props.el.id)}>
-                        Delete
-                    </button> : <button onClick={editTask}>Save</button>}
+        <div>
+            <Draggable key={uuidv4()} draggableId={props.el.id} index={props.index}>
+                {(provided, snapshot) => (
+                    <div key={props.el.id}
+                         ref={provided.innerRef}
+                         {...provided.draggableProps}
+                         {...provided.dragHandleProps}
+                         style={{
+                             userSelect: "none",
+                             padding: 16,
+                             margin: "0 0 8px 0",
+                             minHeight: "50px",
+                             backgroundColor: snapshot.isDragging
+                                 ? "#263B4A"
+                                 : "#456C86",
+                             color: "white",
+                             ...provided.draggableProps.style
+                         }}
+                    >
+                        {props.el.title}
+                    </div>
+                )}
 
-                </TaskList>
+            </Draggable>
 
-            </Container>
-
-        </>
+        </div>
     );
 }
 

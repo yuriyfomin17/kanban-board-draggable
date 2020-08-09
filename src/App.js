@@ -8,25 +8,25 @@ import {DragDropContext, Droppable} from "react-beautiful-dnd";
 const initialTasks = [
     {
         id: uuidv4(),
-        title: "First Task",
+        title: "1",
         priority: 1,
         status: 'todo'
     },
     {
         id: uuidv4(),
-        title: "First Task",
+        title: "2",
         priority: 2,
         status: 'todo'
     },
     {
         id: uuidv4(),
-        title: "First Task",
+        title: "3",
         priority: 3,
         status: 'todo'
     },
     {
         id: uuidv4(),
-        title: "Second Task",
+        title: "4",
         priority: 3,
         status: 'review'
     }
@@ -35,7 +35,7 @@ const statuses = ['todo', 'progress', 'review', 'done']
 
 function App() {
     const [tasks, setTasks] = useState(initialTasks)
-    const [statusData, setStatus]=useState(statuses)
+    const [statusData, setStatus] = useState(statuses)
     const deleteTask = (ID) => {
         const copiedTasks = tasks.slice()
         const index = copiedTasks.findIndex((el) => el.id === ID)
@@ -60,52 +60,61 @@ function App() {
         setTasks(copiedTasks)
     }
     const onDragEnd = (result) => {
-        if (!result.destination) {
+        const { source, destination } = result;
+
+        // dropped outside the list
+        if (!destination) {
             return;
         }
-        const copiedData = statusData.slice()
-        const itemDestination = copiedData[result.destination.index]
-        copiedData[result.destination.index]= copiedData[result.source.index]
-        copiedData[result.source.index]=itemDestination
-        setStatus(copiedData)
+
+        if (source.droppableId === destination.droppableId) {
+            const CopiedList = tasks.slice()
+            const itemDestination = CopiedList[result.destination.index]
+            CopiedList[result.destination.index] = CopiedList[result.source.index]
+            CopiedList[result.source.index] = itemDestination
+            setTasks(CopiedList)
+        } else {
+
+        }
+
+
 
 
     }
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId={uuidv4()}>
-                {(provided, snapshot) => (
-                    <Container
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                    >
-                        {
-                            statusData.map((status, index) => <Board
-                                index={index}
-                                key={status}
-                                status={status}
-                                tasks={tasks}
-                                deleteTask={deleteTask}
-                                editTask={editTask}
-                                addTask={addTask}
-                            />)
-                        }
+        <div style={{display:'flex', justifyContent:'center', height:'100%'}}>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div
+                    style={{
+                        display: 'flex', flexDirection: "row", alignItems: "top"
+                    }}
 
-                    </Container>
-                )}
-            </Droppable>
+                >
+                    {
+                        statusData.map((status, index) => <Board
+                            index={index}
+                            key={status}
+                            status={status}
+                            tasks={tasks}
+                            deleteTask={deleteTask}
+                            editTask={editTask}
+                            addTask={addTask}
+                        />)
+                    }
+                </div>
 
 
-        </DragDropContext>
+            </DragDropContext>
+        </div>
 
     );
 }
 
 
 const Container = styled.div`
-    display:flex;
-    
-    
+display:flex;
+
+
 `;
 
 export default App;
