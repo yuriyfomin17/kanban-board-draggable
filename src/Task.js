@@ -21,31 +21,33 @@ function Task(props) {
     }
     return (
         <div>
-            <Draggable key={uuidv4()} draggableId={props.el.id} index={props.index}>
-                {(provided, snapshot) => (
-                    <div key={props.el.id}
-                         ref={provided.innerRef}
-                         {...provided.draggableProps}
-                         {...provided.dragHandleProps}
-                         style={{
-                             userSelect: "none",
-                             padding: 16,
-                             margin: "0 0 8px 0",
-                             minHeight: "50px",
-                             backgroundColor: snapshot.isDragging
-                                 ? "#263B4A"
-                                 : "#456C86",
-                             color: "white",
-                             ...provided.draggableProps.style
-                         }}
-                    >
-                        {props.el.title}
-                        {provided.placeholder}
-                    </div>
 
-                )}
+                <Draggable key={uuidv4()} draggableId={props.el.id} index={props.index}>
+                    {(provided, snapshot) => (
+                        <div key={props.el.id}
+                             ref={provided.innerRef}
+                             {...provided.draggableProps}
+                             {...provided.dragHandleProps}
+                             style={{
+                                 userSelect: "none",
+                                 padding: 16,
+                                 margin: "0 0 8px 0",
+                                 minHeight: "50px",
+                                 backgroundColor: snapshot.isDragging
+                                     ? "#263B4A"
+                                     : "#456C86",
+                                 color: "white",
+                                 ...provided.draggableProps.style
+                             }}
+                        >
+                            {props.el.title}
+                            {provided.placeholder}
+                        </div>
 
-            </Draggable>
+                    )}
+
+                </Draggable>
+
 
         </div>
     );

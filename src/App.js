@@ -70,11 +70,17 @@ function App() {
         ) {
             return;
         }
-        const copiedData = tasks.slice()
-        const column = statuses[source.droppableId]
-        const draggableItem = copiedData.find(el=>el.id===result.draggableId)
-        console.log(column)
-        console.log(draggableItem)
+        if(destination.droppableId === source.droppableId ){
+            const copiedData = tasks.slice()
+            const column = statuses[source.droppableId]
+            const draggableItem = copiedData.find(el=>el.id===result.draggableId)
+            const destinationItem = copiedData.find(el=>el.id===result.destination.draggableId)
+            console.log(column)
+            console.log(draggableItem)
+            console.log(destinationItem)
+
+        }
+
 
 
     }
