@@ -1,30 +1,16 @@
 import React, {useState} from 'react';
 import Task from "./Task";
-import styled from "styled-components";
-import {Droppable, Draggable} from "react-beautiful-dnd";
+import {Droppable} from "react-beautiful-dnd";
 import {v4 as uuidv4} from 'uuid';
-import index from "styled-components/dist/styled-components-macro.esm";
 
-const Container = styled.div`
-    margin:10px;
-    border:1px solid lightgrey;
-    border-radius:10px;
-    
-`;
-
-const invisibleContainer = styled.div`
-    margin:10px;
-    border:1px solid lightgrey;
-    border-radius:10px;
-
-`
-const Title = styled.h3`
-    padding: 8px;
-`
 
 function Board(props) {
     const [addCardBut, setBut] = useState(false)
     const [inputValue, setInputValue] = useState('')
+    const [sortMenuBar, setMenuBar] = useState(false)
+    const toggleMenu = () => {
+        setMenuBar(!sortMenuBar)
+    }
     const changeAddCard = () => {
         if (addCardBut === false) {
             setBut(!addCardBut)
@@ -32,7 +18,7 @@ function Board(props) {
 
         if (addCardBut === true && inputValue !== '') {
             setBut(!addCardBut)
-            props.addTask(props.status, inputValue)
+            props.addTask(props.indexStatus, inputValue)
             setInputValue('')
         }
 
@@ -40,6 +26,15 @@ function Board(props) {
     const setInput = (e) => {
         setInputValue(e.target.value)
 
+    }
+    const sortDataTimeOld = () => {
+        props.sortDataAlphabetically(props.indexStatus, "TimeOLD")
+    }
+    const sortDataTimeNew = () => {
+        props.sortDataAlphabetically(props.indexStatus, "TimeNew")
+    }
+    const sortDataTimeAlphabet = () => {
+        props.sortDataAlphabetically(props.indexStatus, "Alphabet")
     }
 
     return (
@@ -50,14 +45,16 @@ function Board(props) {
             <div style={{margin: 8}}>
                 <h2
                     style={{
-                        background:  'lightgrey',
+                        background: 'lightgrey',
                         padding: 4,
                         width: 250,
                         minHeight: 1,
 
                     }}
                 >Board {props.status}</h2>
-                <Droppable key ={uuidv4()} droppableId={String(props.indexStatus)}>
+
+
+                <Droppable key={uuidv4()} droppableId={String(props.indexStatus)}>
                     {(provided, snapshot) => (
 
                         <div
@@ -75,13 +72,15 @@ function Board(props) {
 
 
                             {
-                                props.tasks.map((el,index) => <Task
-                                        key={el.id}
-                                        el={el}
-                                        index={index}
-                                        deleteTask={props.deleteTask}
-                                        editTask={props.editTask}
-                                    />)
+                                props.tasks.map((el, index) => <Task
+                                    key={el.id}
+                                    el={el}
+                                    index={index}
+                                    deleteTask={props.deleteTask}
+                                    editTask={props.editTask}
+                                    indexStatus={props.indexStatus}
+
+                                />)
                             }
                             {provided.placeholder}
                         </div>
@@ -89,6 +88,14 @@ function Board(props) {
 
 
                 </Droppable>
+
+                {addCardBut ? <input value={inputValue} onChange={setInput}/> : ''}
+                {addCardBut ? <button onClick={changeAddCard}>Save</button> :
+                    <button onClick={changeAddCard}>Add cart</button>}
+                <>
+                    <button>Sort by...</button>
+
+                </>
             </div>
         </div>
 
