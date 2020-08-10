@@ -77,30 +77,36 @@ function App() {
         if (destination.droppableId === source.droppableId) {
             const copiedData = tasks.slice()
             const column = statuses[source.droppableId]
-            console.log(column)
             const [removed] = copiedData.splice(result.source.index, 1)
+            console.log(result.source.index)
+            console.log(copiedData)
+            console.log(result.destination.index)
             copiedData.splice(result.destination.index, 0, removed)
+
+
+
             setTasks(copiedData)
+
         } else {
             const columnSource = statuses[source.droppableId]
-            const columnDestination = statuses[destination.droppableId]
+
             console.log(columnSource)
-            console.log(columnDestination)
+
             console.log(result.destination.index)
-            if(result.destination.index!==0){
-                const copiedData = tasks.slice()
-                const columnDestination = statuses[destination.droppableId]
-                const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
-                const draggableItem = copiedData.find(el=>el.id===result.draggableId)
-                const [removed] = copiedData.splice(draggableIndex, 1)
-                removed.status = columnDestination
-                console.log(removed)
-                console.log(copiedData)
-                copiedData.splice(result.destination.index, 0, removed)
-                setTasks(copiedData)
-                console.log(copiedData)
-            }
-            if(result.destination.index===0){
+
+            const copiedData = tasks.slice()
+            const columnDestination = statuses[destination.droppableId]
+            const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
+            const draggableItem = copiedData.find(el=>el.id===result.draggableId)
+            const [removed] = copiedData.splice(draggableIndex, 1)
+            removed.status = columnDestination
+            console.log(removed)
+            console.log(copiedData)
+            copiedData.splice(result.destination.index, 0, removed)
+            setTasks(copiedData)
+            console.log(copiedData)
+
+            /*if(result.destination.index===0){
                 const copiedData = tasks.slice()
                 const draggableItem = copiedData.find(el=>el.id===result.draggableId)
                 const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
@@ -111,7 +117,7 @@ function App() {
                 console.log(draggableItem)
                 copiedData[draggableIndex]=draggableItem
                 setTasks(copiedData)
-            }
+            }*/
 
 
 
