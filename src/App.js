@@ -5,41 +5,46 @@ import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import index from "styled-components/dist/styled-components-macro.esm";
 
-
 const initialTasks = [
     {
-        id: uuidv4(),
-        title: "1",
-        priority: 0,
-        status: 'todo'
+        0: [{
+            id: uuidv4(),
+            title: "1",
+            priority: 1,
+        }, {
+            id: uuidv4(),
+            title: "2",
+            priority: 1,
+        },{
+            id: uuidv4(),
+            title: "3",
+            priority: 2,
+        }]
     },
     {
-        id: uuidv4(),
-        title: "2",
-        priority: 1,
-        status: 'todo'
+        1:[]
     },
     {
-        id: uuidv4(),
-        title: "3",
-        priority: 2,
-        status: 'todo'
+        2:[]
     },
     {
-        id: uuidv4(),
-        title: "4",
-        priority: 3,
-        status: 'review'
-    },
+        3:[
+            {
+                id: uuidv4(),
+                title: "4",
+                priority: 3,
+                status: 'review'
+            },
+        ]
+    }
 
 ]
+
 const statuses = ['todo', 'progress', 'review', 'done']
-const order = [{todo:[0,1,2]}, {progress:[]}, {review:[3]}, {done:[]}]
 
 function App() {
     const [tasks, setTasks] = useState(initialTasks)
     const [statusData, setStatus] = useState(statuses)
-    const [statusOrder, setStatusOrder] = useState(order)
     const deleteTask = (ID) => {
         const copiedTasks = tasks.slice()
         const index = copiedTasks.findIndex((el) => el.id === ID)
@@ -75,16 +80,24 @@ function App() {
             return;
         }
         if (destination.droppableId === source.droppableId) {
-            const copiedData = tasks.slice()
-            const column = statuses[source.droppableId]
-            const [removed] = copiedData.splice(result.source.index, 1)
-            console.log(result.source.index)
-            console.log(copiedData)
-            console.log(result.destination.index)
-            copiedData.splice(result.destination.index, 0, removed)
-            setTasks(copiedData)
-
+            const copiedTasks = tasks.slice()
+            const tasksArr = copiedTasks[destination.droppableId][destination.droppableId]
+            const [removed] = tasksArr.splice(result.source.index,1)
+            tasksArr.splice(result.destination.index,0,removed)
+            console.log(copiedTasks)
+            setTasks(copiedTasks)
         } else {
+            console.log(source.droppableId)
+            console.log(destination.droppableId)
+            const copiedTasks = tasks.slice()
+            const tasksArr = copiedTasks[source.droppableId][source.droppableId]
+            const [removed] = tasksArr.splice(result.source.index,1)
+            console.log(removed)
+            console.log(copiedTasks)
+            console.log(copiedTasks[destination.droppableId][destination.droppableId])
+            copiedTasks[destination.droppableId][destination.droppableId].splice(result.destination.index,0,removed)
+            console.log(copiedTasks)
+            setTasks(copiedTasks)
 
         }
 
@@ -100,11 +113,11 @@ function App() {
 
                 >
                     {
-                        statusData.map((status, index) => <Board
+                        tasks.map((el, index) => <Board
                             indexStatus={index}
                             key={index}
-                            status={status}
-                            tasks={tasks}
+                            status={statuses[index]}
+                            tasks={el[String(index)]}
                             deleteTask={deleteTask}
                             editTask={editTask}
                             addTask={addTask}

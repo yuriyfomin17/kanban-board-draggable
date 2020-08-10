@@ -75,9 +75,7 @@ function Board(props) {
 
 
                             {
-                                props.tasks
-                                    .filter((el) => el.status === props.status)
-                                    .map((el,index) => <Task
+                                props.tasks.map((el,index) => <Task
                                         key={el.id}
                                         el={el}
                                         index={index}
