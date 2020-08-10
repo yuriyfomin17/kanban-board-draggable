@@ -57,7 +57,7 @@ function Board(props) {
 
                     }}
                 >Board {props.status}</h2>
-                <Droppable key ={uuidv4()} droppableId={String(props.index)}>
+                <Droppable key ={uuidv4()} droppableId={String(props.indexStatus)}>
                     {(provided, snapshot) => (
 
                         <div
@@ -71,7 +71,6 @@ function Board(props) {
 
 
                             }}
-
                         >
 
 
@@ -79,16 +78,15 @@ function Board(props) {
                                 props.tasks
                                     .filter((el) => el.status === props.status)
                                     .map((el,index) => <Task
-                                        index={index}
                                         key={el.id}
                                         el={el}
+                                        index={index}
                                         deleteTask={props.deleteTask}
                                         editTask={props.editTask}
                                     />)
                             }
                             {provided.placeholder}
                         </div>
-
                     )}
 
 

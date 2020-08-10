@@ -3,39 +3,43 @@ import Board from "./Board";
 import {v4 as uuidv4} from 'uuid';
 import styled from "styled-components";
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
+import index from "styled-components/dist/styled-components-macro.esm";
 
 
 const initialTasks = [
     {
         id: uuidv4(),
         title: "1",
-        priority: 1,
+        priority: 0,
         status: 'todo'
     },
     {
         id: uuidv4(),
         title: "2",
-        priority: 2,
+        priority: 1,
         status: 'todo'
     },
     {
         id: uuidv4(),
         title: "3",
-        priority: 3,
+        priority: 2,
         status: 'todo'
     },
     {
         id: uuidv4(),
         title: "4",
-        priority: 4,
+        priority: 3,
         status: 'review'
-    }
+    },
+
 ]
 const statuses = ['todo', 'progress', 'review', 'done']
+const order = [{todo:[0,1,2]}, {progress:[]}, {review:[3]}, {done:[]}]
 
 function App() {
     const [tasks, setTasks] = useState(initialTasks)
     const [statusData, setStatus] = useState(statuses)
+    const [statusOrder, setStatusOrder] = useState(order)
     const deleteTask = (ID) => {
         const copiedTasks = tasks.slice()
         const index = copiedTasks.findIndex((el) => el.id === ID)
@@ -70,17 +74,48 @@ function App() {
         ) {
             return;
         }
-        if(destination.droppableId === source.droppableId ){
+        if (destination.droppableId === source.droppableId) {
             const copiedData = tasks.slice()
             const column = statuses[source.droppableId]
-            const draggableItem = copiedData.find(el=>el.id===result.draggableId)
-            const destinationItem = copiedData.find(el=>el.id===result.destination.draggableId)
             console.log(column)
-            console.log(draggableItem)
-            console.log(destinationItem)
+            const [removed] = copiedData.splice(result.source.index, 1)
+            copiedData.splice(result.destination.index, 0, removed)
+            setTasks(copiedData)
+        } else {
+            const columnSource = statuses[source.droppableId]
+            const columnDestination = statuses[destination.droppableId]
+            console.log(columnSource)
+            console.log(columnDestination)
+            console.log(result.destination.index)
+            if(result.destination.index!==0){
+                const copiedData = tasks.slice()
+                const columnDestination = statuses[destination.droppableId]
+                const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
+                const draggableItem = copiedData.find(el=>el.id===result.draggableId)
+                const [removed] = copiedData.splice(draggableIndex, 1)
+                removed.status = columnDestination
+                console.log(removed)
+                console.log(copiedData)
+                copiedData.splice(result.destination.index, 0, removed)
+                setTasks(copiedData)
+                console.log(copiedData)
+            }
+            if(result.destination.index===0){
+                const copiedData = tasks.slice()
+                const draggableItem = copiedData.find(el=>el.id===result.draggableId)
+                const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
+                const columnDestination = statuses[destination.droppableId]
+                console.log(draggableItem)
+                console.log(columnDestination)
+                draggableItem.status = columnDestination
+                console.log(draggableItem)
+                copiedData[draggableIndex]=draggableItem
+                setTasks(copiedData)
+            }
+
+
 
         }
-
 
 
     }
@@ -95,8 +130,8 @@ function App() {
                 >
                     {
                         statusData.map((status, index) => <Board
-                            index={index}
-                            key={status}
+                            indexStatus={index}
+                            key={index}
                             status={status}
                             tasks={tasks}
                             deleteTask={deleteTask}
