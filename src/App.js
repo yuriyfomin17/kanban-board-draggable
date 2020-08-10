@@ -82,44 +82,9 @@ function App() {
             console.log(copiedData)
             console.log(result.destination.index)
             copiedData.splice(result.destination.index, 0, removed)
-
-
-
             setTasks(copiedData)
 
         } else {
-            const columnSource = statuses[source.droppableId]
-
-            console.log(columnSource)
-
-            console.log(result.destination.index)
-
-            const copiedData = tasks.slice()
-            const columnDestination = statuses[destination.droppableId]
-            const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
-            const draggableItem = copiedData.find(el=>el.id===result.draggableId)
-            const [removed] = copiedData.splice(draggableIndex, 1)
-            removed.status = columnDestination
-            console.log(removed)
-            console.log(copiedData)
-            copiedData.splice(result.destination.index, 0, removed)
-            setTasks(copiedData)
-            console.log(copiedData)
-
-            /*if(result.destination.index===0){
-                const copiedData = tasks.slice()
-                const draggableItem = copiedData.find(el=>el.id===result.draggableId)
-                const draggableIndex = copiedData.findIndex(el=>el.id===result.draggableId)
-                const columnDestination = statuses[destination.droppableId]
-                console.log(draggableItem)
-                console.log(columnDestination)
-                draggableItem.status = columnDestination
-                console.log(draggableItem)
-                copiedData[draggableIndex]=draggableItem
-                setTasks(copiedData)
-            }*/
-
-
 
         }
 
