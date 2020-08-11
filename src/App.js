@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import Board from "./Board";
 import {v4 as uuidv4} from 'uuid';
-import styled from "styled-components";
-import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import index from "styled-components/dist/styled-components-macro.esm";
+import {DragDropContext} from "react-beautiful-dnd";
 
 const initialTasks = [
     {

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 
 
+
+
 function EditTitle(props) {
     const [inputValue, setInput] = useState(props.el.title)
     const [editBut, setEditBut] = useState(true)
@@ -16,7 +18,7 @@ function EditTitle(props) {
         <span>
 
                 {editBut ? props.el.title : <input value={inputValue} onChange={e => setInput(e.target.value)}/>}
-            {editBut ? <button onClick={changeEdit}>Edit</button> : <button onClick={changeSave}>Save</button>}
+                {editBut ? <span onClick={changeEdit}>{props.editBut}</span> : <button onClick={changeSave}>Save</button>}
 
         </span>
     );

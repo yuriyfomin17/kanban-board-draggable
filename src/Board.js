@@ -6,6 +6,7 @@ import './App.css';
 import './AddCard.css'
 
 
+
 function Board(props) {
     const [addCardBut, setBut] = useState(false)
     const [inputValue, setInputValue] = useState('')
@@ -95,6 +96,7 @@ function Board(props) {
 
 
                 </Droppable>
+
 
                 {addCardBut ? <input value={inputValue} onChange={setInput}/> : ''}
                 {addCardBut ? <button onClick={changeAddCard}>Save</button> :
