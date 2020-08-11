@@ -7,6 +7,17 @@
   border-radius: 10px
 
 }
+.dividerTitleBut{
+  width:140px;
+  height:auto;
+  display:inline-block;
+}
+.dividerBut{
+  width:5px;
+  height:auto;
+  display:inline-block;
+}
+
 .cardsContainer{
   height: 404px;
   width: 252px;

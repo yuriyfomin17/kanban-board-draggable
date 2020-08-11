@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {Draggable} from "react-beautiful-dnd";
 import {v4 as uuidv4} from 'uuid';
 import EditTitle from "./EditTitle";
+import "./App.css"
 
 const editBut = (
     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen" fill="currentColor"
@@ -15,6 +16,14 @@ const editBut = (
     </svg>
 
 )
+const deleteBut =(
+    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-x-circle-fill" fill="currentColor"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd"
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
+    </svg>
+)
+
 
 function Task(props) {
 
@@ -38,8 +47,8 @@ function Task(props) {
                              margin: "0 0 8px 0",
                              minHeight: "5px",
                              backgroundColor: snapshot.isDragging
-                                 ? "#263B4A"
-                                 : "#456C86",
+                                 ? "#d5e0d8"
+                                 : "#a7c9e3",
                              color: "white",
                              ...provided.draggableProps.style
                          }}
@@ -47,8 +56,8 @@ function Task(props) {
 
                         <EditTitle el={props.el} editTask={props.editTask} indexStatus={props.indexStatus} editBut={editBut}/>
 
-
-                        <button onClick={deleteItem}>Delete</button>
+                        <div className="dividerBut"/>
+                        <button type="button" className="btn btn-outline-primary btn-sm " onClick={deleteItem}>{deleteBut}</button>
                         {provided.placeholder}
                     </div>
 
