@@ -7,19 +7,19 @@ const initialTasks = [
     {
         0: [{
             id: uuidv4(),
-            title: "1",
+            title: "a",
             priority: 1,
             status: 'review',
             time: new Date()
         },{
             id: uuidv4(),
-            title: "2",
+            title: "b",
             priority: 2,
             status: 'review',
             time: new Date()
         },{
             id: uuidv4(),
-            title: "3",
+            title: "c",
             priority: 3,
             status: 'review',
             time: new Date()
@@ -35,7 +35,7 @@ const initialTasks = [
         3: [
             {
                 id: uuidv4(),
-                title: "4",
+                title: "d",
                 priority: 3,
                 status: 'review',
                 time: new Date()

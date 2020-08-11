@@ -125,9 +125,9 @@ function Board(props) {
                     <button type="button" className="btn btn-outline-primary btn-sm" onClick={toggleMenu}>Sort
                         by..</button>
                 {sortMenuBar?<div><button type="button" className="btn btn-outline-primary btn-sm"
-                                  onClick={sortMenuBar}>Alphabet</button>
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={sortMenuBar}>first new</button>
-                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={sortMenuBar}>first old</button></div>:''}
+                                  onClick={sortAlphabet}>Alphabet</button>
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={sortDataTimeNew}>first new</button>
+                    <button type="button" className="btn btn-outline-primary btn-sm" onClick={sortDataTimeOld}>first old</button></div>:''}
 
 
             </div>
