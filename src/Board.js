@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Task from "./Task";
 import {Droppable} from "react-beautiful-dnd";
 import {v4 as uuidv4} from 'uuid';
+import './App.css';
+import './AddCard.css'
 
 
 function Board(props) {
@@ -33,7 +35,7 @@ function Board(props) {
     const sortDataTimeNew = () => {
         props.sortDataAlphabetically(props.indexStatus, "TimeNew")
     }
-    const sortDataTimeAlphabet = () => {
+    const sortAlphabet = () => {
         props.sortDataAlphabetically(props.indexStatus, "Alphabet")
     }
 
@@ -49,6 +51,9 @@ function Board(props) {
                         padding: 4,
                         width: 250,
                         minHeight: 1,
+                        borderRadius: 10,
+                        textAlign: "center"
+
 
                     }}
                 >Board {props.status}</h2>
@@ -57,17 +62,17 @@ function Board(props) {
                 <Droppable key={uuidv4()} droppableId={String(props.indexStatus)}>
                     {(provided, snapshot) => (
 
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            style={{
-                                background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                                padding: 4,
-                                width: 250,
-                                minHeight: 500,
+                        <div className='cardsContainer'
+                             ref={provided.innerRef}
+                             {...provided.droppableProps}
+                             style={{
+                                 background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                                 padding: 4,
+                                 width: 250,
+                                 minHeight: 500,
 
 
-                            }}
+                             }}
                         >
 
 
@@ -82,7 +87,9 @@ function Board(props) {
 
                                 />)
                             }
+
                             {provided.placeholder}
+
                         </div>
                     )}
 
@@ -91,11 +98,18 @@ function Board(props) {
 
                 {addCardBut ? <input value={inputValue} onChange={setInput}/> : ''}
                 {addCardBut ? <button onClick={changeAddCard}>Save</button> :
-                    <button onClick={changeAddCard}>Add cart</button>}
-                <>
-                    <button>Sort by...</button>
-
-                </>
+                    <span className="dropdown">
+                        <button className="dropbtn" onClick={changeAddCard}>Add card</button>
+                    </span>
+                }
+                <div className="dropdown">
+                    <button className="dropbtn">Sort by...</button>
+                    <div className="dropdown-content">
+                        <button onClick={sortAlphabet}>Alphabet</button>
+                        <button onClick={sortDataTimeNew}>Time(first new)</button>
+                        <button onClick={sortDataTimeOld}>Time(first old)</button>
+                    </div>
+                </div>
             </div>
         </div>
 

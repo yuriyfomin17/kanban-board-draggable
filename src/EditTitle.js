@@ -13,12 +13,12 @@ function EditTitle(props) {
     }
 
     return (
-        <>
+        <span>
 
                 {editBut ? props.el.title : <input value={inputValue} onChange={e => setInput(e.target.value)}/>}
-                {editBut ? <button onClick={changeEdit}>Edit</button> : <button onClick={changeSave}>Save</button>}
+            {editBut ? <button onClick={changeEdit}>Edit</button> : <button onClick={changeSave}>Save</button>}
 
-        </>
+        </span>
     );
 }
 
